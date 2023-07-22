@@ -979,5 +979,7 @@ namespace RouteMasterUpOne.Models
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
         public DbSet<RouteMasterUpOne.Models.ViewModels.CommentsAccommodationsIndexVM>? CommentsAccommodationsIndexVM { get; set; }
+
+        public DbSet<RouteMasterUpOne.Models.ViewModels.CommentsAccommodationsEditVM>? CommentsAccommodationsEditVM { get; set; }
     }
 }

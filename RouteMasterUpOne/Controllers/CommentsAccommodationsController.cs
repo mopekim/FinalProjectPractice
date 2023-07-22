@@ -104,9 +104,9 @@ namespace RouteMasterUpOne.Controllers
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 string path = Path.Combine(webRootPath, "Uploads");
 
-                foreach (var i in file1)
+                foreach (IFormFile i in file1)
                 {
-                    if (i != null)
+                    if (i != null && i.Length>0)
                     {
                         string fileName = SaveUploadedFile(path, i);
                         img.CommentsAccommodationId= commentDb.Id;
@@ -160,14 +160,23 @@ namespace RouteMasterUpOne.Controllers
                 return NotFound();
             }
 
-            var commentsAccommodation = await _context.CommentsAccommodations.FindAsync(id);
-            if (commentsAccommodation == null)
+            var commentDb = await _context.CommentsAccommodations.FindAsync(id);
+            if (commentDb == null)
             {
                 return NotFound();
             }
-            ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", commentsAccommodation.AccommodationId);
-            ViewData["MemberId"] = new SelectList(_context.Members, "Id", "Id", commentsAccommodation.MemberId);
-            return View(commentsAccommodation);
+            CommentsAccommodationsEditVM vm = new CommentsAccommodationsEditVM
+            {
+                Id = (int)id,
+                Title = commentDb.Title,
+                Score = commentDb.Score,
+                Pros = commentDb.Pros,
+                Cons = commentDb.Cons
+            };
+
+            //ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Name", commentDb.AccommodationId);
+            //ViewData["MemberId"] = new SelectList(_context.Members, "Id", "Account", commentDb.MemberId);
+            return View(vm);
         }
 
         // POST: CommentsAccommodations/Edit/5
@@ -175,23 +184,28 @@ namespace RouteMasterUpOne.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MemberId,AccommodationId,Score,Title,Pros,Cons,CreateDate,Reply,ReplyAt")] CommentsAccommodation commentsAccommodation)
+        public async Task<IActionResult> Edit(int id, CommentsAccommodationsEditVM vm)
         {
-            if (id != commentsAccommodation.Id)
+            if (id != vm.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
+                var commentDb = await _context.CommentsAccommodations.FindAsync(id);
+                commentDb.Score = vm.Score;
+                commentDb.Title = vm.Title;
+                commentDb.Pros = vm.Pros;
+                commentDb.Cons = vm.Cons;
                 try
                 {
-                    _context.Update(commentsAccommodation);
+                    _context.Update(commentDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CommentsAccommodationExists(commentsAccommodation.Id))
+                    if (!CommentsAccommodationExists(commentDb.Id))
                     {
                         return NotFound();
                     }
@@ -202,29 +216,29 @@ namespace RouteMasterUpOne.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", commentsAccommodation.AccommodationId);
-            ViewData["MemberId"] = new SelectList(_context.Members, "Id", "Id", commentsAccommodation.MemberId);
-            return View(commentsAccommodation);
+            //ViewData["AccommodationId"] = new SelectList(_context.Accommodations, "Id", "Id", commentsAccommodation.AccommodationId);
+            //ViewData["MemberId"] = new SelectList(_context.Members, "Id", "Id", commentsAccommodation.MemberId);
+            return View(vm);
         }
 
         // GET: CommentsAccommodations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.CommentsAccommodations == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var commentsAccommodation = await _context.CommentsAccommodations
+            var commentDb = await _context.CommentsAccommodations
                 .Include(c => c.Accommodation)
                 .Include(c => c.Member)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (commentsAccommodation == null)
-            {
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (commentDb == null)
+            {   
                 return NotFound();
             }
 
-            return View(commentsAccommodation);
+            return View(commentDb);
         }
 
         // POST: CommentsAccommodations/Delete/5
@@ -236,10 +250,10 @@ namespace RouteMasterUpOne.Controllers
             {
                 return Problem("Entity set 'CoreRouteMasterContext.CommentsAccommodations'  is null.");
             }
-            var commentsAccommodation = await _context.CommentsAccommodations.FindAsync(id);
-            if (commentsAccommodation != null)
+            var commentDb = await _context.CommentsAccommodations.FindAsync(id);
+            if (commentDb != null)
             {
-                _context.CommentsAccommodations.Remove(commentsAccommodation);
+                _context.CommentsAccommodations.Remove(commentDb);
             }
             
             await _context.SaveChangesAsync();
