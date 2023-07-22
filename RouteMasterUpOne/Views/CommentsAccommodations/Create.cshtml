@@ -1,0 +1,61 @@
+﻿@model RouteMasterUpOne.Models.ViewModels.CommentsAccommodationsCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>建立評論</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4" enctype="multipart/form-data" method="post">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="MemberId" class="control-label"></label>
+                <select asp-for="MemberId" class ="form-select" asp-items="ViewBag.MemberId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="AccommodationId" class="control-label"></label>
+                <select asp-for="AccommodationId" class ="form-select" asp-items="ViewBag.AccommodationId"></select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Score" class="control-label"></label>
+                <input asp-for="Score" class="form-control" value="0" min="0" max="5" step="1" />
+                <span asp-validation-for="Score" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Pros" class="control-label"></label>
+                <input asp-for="Pros" class="form-control" />
+                <span asp-validation-for="Pros" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Cons" class="control-label"></label>
+                <input asp-for="Cons" class="form-control" />
+                <span asp-validation-for="Cons" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CommentImg" class="control-label"></label>
+                <input type="file" name="file1" class="form-control" multiple="multiple" accept="image/*" />
+                <span asp-validation-for="CommentImg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
