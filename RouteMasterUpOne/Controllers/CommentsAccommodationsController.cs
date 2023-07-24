@@ -100,7 +100,7 @@ namespace RouteMasterUpOne.Controllers
                 _context.CommentsAccommodations.Add(commentDb);
                 await _context.SaveChangesAsync();
 
-                CommentsAccommodationImage img = new CommentsAccommodationImage();
+
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 string path = Path.Combine(webRootPath, "Uploads");
 
@@ -108,15 +108,20 @@ namespace RouteMasterUpOne.Controllers
                 {
                     if (i != null && i.Length>0)
                     {
+
+                        CommentsAccommodationImage img = new CommentsAccommodationImage();
                         string fileName = SaveUploadedFile(path, i);
-                        img.CommentsAccommodationId= commentDb.Id;
+                        img.CommentsAccommodationId = commentDb.Id;
                         img.Image = fileName;
                         _context.CommentsAccommodationImages.Add(img);
                         await _context.SaveChangesAsync();
                     }
+                    //else
+                    //{
+                    //    await _context.SaveChangesAsync();
+                    //}
+
                    
-
-
                 }
                 return RedirectToAction(nameof(Index));
 

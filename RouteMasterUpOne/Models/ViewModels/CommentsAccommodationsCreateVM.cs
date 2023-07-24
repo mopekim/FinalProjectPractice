@@ -4,7 +4,9 @@ namespace RouteMasterUpOne.Models.ViewModels
 {
 	public class CommentsAccommodationsCreateVM
 	{
-		[Display(Name = "評論人")]
+        public int Id { get; set; }	
+
+        [Display(Name = "評論人")]
 		public int MemberId { get; set; }
 
 		[Display(Name = "住宿名稱")]
