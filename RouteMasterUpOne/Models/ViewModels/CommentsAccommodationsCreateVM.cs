@@ -13,7 +13,7 @@ namespace RouteMasterUpOne.Models.ViewModels
 		public int AccommodationId { get; set; }
 
 		[Display(Name = "分數")]
-		[Required]
+		//[Required]
 		public int Score { get; set; }
 
 		[Display(Name = "標題")]
