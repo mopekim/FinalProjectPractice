@@ -127,7 +127,7 @@ namespace RouteMasterUpOne.Controllers
 
 
             }
-           
+            ModelState.AddModelError("", "請點擊星星給予評分");
             return View(vm);
         }
 

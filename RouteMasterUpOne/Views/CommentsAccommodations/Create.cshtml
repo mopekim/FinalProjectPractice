@@ -65,7 +65,7 @@
             </div>
             <div class="form-group d-none">
                 <label asp-for="Score" class="control-label"></label>
-                <input asp-for="Score" class="form-control" id="starValue" />
+                <input asp-for="Score" class="form-control" id="starValue"/>
                 <span asp-validation-for="Score" class="text-danger"></span>
             </div>
             <div class="form-group form-floating mb-3">
@@ -89,7 +89,7 @@
                 <span asp-validation-for="CommentImg" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" id="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -150,9 +150,14 @@
                     $(".panel .tip").hide();
                     var points=current.index()+1;
                     $(".panel .result").show().text(`您選擇了 ${points} 分`);
+                    var rating = $("#starValue").val(points);
+                    
+                   
                    
 
                 })
+
+               
 
 
 
