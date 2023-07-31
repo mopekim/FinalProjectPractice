@@ -13,9 +13,10 @@ namespace RouteMasterUpOne.Models.Services
 			_repo = repo;
 		}
 
-		public async Task<IEnumerable<CommentsAccommodationsIndexDto>> Search()
+		public async Task<IEnumerable<CommentsAccommodationsIndexDto>> Search(CommentPostDTO input)
 		{
-			return await _repo.Search();
+			return await _repo.Search(input);
 		}
 	}
 }
+	

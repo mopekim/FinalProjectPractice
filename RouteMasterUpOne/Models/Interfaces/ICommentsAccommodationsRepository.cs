@@ -4,7 +4,7 @@ namespace RouteMasterUpOne.Models.Interfaces
 {
 	public interface ICommentsAccommodationsRepository
 	{
-		Task<IEnumerable<CommentsAccommodationsIndexDto>> Search();
+		Task<IEnumerable<CommentsAccommodationsIndexDto>> Search(CommentPostDTO input);
 	}
 }
 		

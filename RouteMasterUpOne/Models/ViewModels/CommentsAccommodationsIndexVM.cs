@@ -18,8 +18,17 @@ namespace RouteMasterUpOne.Models.ViewModels
 		[Display(Name = "評論標題")]
 		public string? Title { get; set; }
 
-		[Display(Name = "建立時間")]
-		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm}")]
+        [Display(Name = "優點")]
+        public string? Pros { get; set; }
+
+        [Display(Name = "缺點")]
+        public string? Cons { get; set; }
+
+        [Display(Name = "建立時間")]
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
 		public DateTime CreateDate { get; set; }
-	}
+
+
+        //public IEnumerable<string>? Images { get; set; }
+    }
 }

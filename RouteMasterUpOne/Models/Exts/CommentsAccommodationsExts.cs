@@ -13,6 +13,8 @@ namespace RouteMasterUpOne.Models.Exts
 				Account = entity.Member.Account,
 				HotelName = entity.Accommodation.Name,
 				Score = entity.Score,
+				Pros=entity.Pros,
+				Cons=entity.Cons,
 				Title = entity.Title,
 				CreateDate = entity.CreateDate
 			};
@@ -27,6 +29,8 @@ namespace RouteMasterUpOne.Models.Exts
 				Account = dto.Account,
 				HotelName = dto.HotelName,
 				Score = dto.Score,
+				Pros=dto.Pros,
+				Cons=dto.Cons,
 				Title = dto.Title,
 				CreateDate = dto.CreateDate
 			};

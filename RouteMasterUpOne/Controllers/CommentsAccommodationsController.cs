@@ -29,15 +29,15 @@ namespace RouteMasterUpOne.Controllers
         }
 
         // GET: CommentsAccommodations
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult<IEnumerable<CommentsAccommodationsIndexVM>>> Index([FromBody] CommentPostDTO input)
         {
             ICommentsAccommodationsRepository repo = new CommentsAccommodationsEFRepository();
             CommentsAccommodationsService service = new CommentsAccommodationsService(repo);
 
-            var dto = await service.Search();
-            var vm =dto.Select(c => c.ToIndexVM());
-
-			return View(vm);
+            var dto = await service.Search(input);
+           var vm = dto.Select(c => c.ToIndexVM()).ToList();
+                
+            return Json(vm);
         }
 
         // GET: CommentsAccommodations/Details/5
